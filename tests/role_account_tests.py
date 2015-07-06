@@ -1,17 +1,17 @@
 import unittest
-import gl_role_account_create
+from gl_role_account_create.gl_role_account_create import CreateRoleAccount
 
 class TestCreateRoleAccount(unittest.TestCase):
 
     def setUp(self):
-        user1 =  {
+        user1 = {
             "type": "role",
             "system": false,
             "id": "r-vxp-git",
             "password": "!!",
             "uid": "534",
-            "gid": [ "nobody" ],
-            "groups": [ ],
+            "gid": ["nobody"],
+            "groups": [],
             "comment": "VXP git role account,,,",
             "home": "/home/r-vxp-git",
             "shell": "/bin/bash",
@@ -28,8 +28,8 @@ class TestCreateRoleAccount(unittest.TestCase):
             "id": "mspah",
             "password": "$6$Ki.Jd4FB$njmz8j7a0xbop06RcOdbAmp4mgDjsQs6yn05cCjRLJkliTAO6HCAWIl24ChH.VxkY1g36brn7uIzHkpHri1XS1",
             "uid": "1200",
-            "gid": [ "www-coop" ],
-            "groups": [ ],
+            "gid": ["www-coop"],
+            "groups": [],
             "comment": "Matt Spah,Software Dev Team,,",
             "home": "/home/mspah",
             "shell": "/bin/bash",
@@ -38,11 +38,13 @@ class TestCreateRoleAccount(unittest.TestCase):
             [
             "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABBwCUrhV7fANUeM1OErZrm/5K193XHEHdcUjxKol/cdijjeUA4mraLMaqga4XU7aU4PVMmgIY7dn8nKP8JOIagxjLXe62/cblnS2Sd2Iv+HghcIENN/k5EXJVAIfOyRpGLlzDe7P4cxeDMlOzTsC9pdxiuYjd4ilh8uLwwpS596AC9CoU229aLva4hZoVrV+/rxR/73vRPqWmBX0lJ+d0MuAZiiwy07+WZquY3bP/CdByzxE7aRRGTXe4vYNIhOSlgj70wPiVlMGziQfaCM4hhLO3qHrxL0WKaSpzIEOM1Y4zpTlo9/NROJrPdwF6iQ3YseIxUkFdk9KJ0vkxeZTSGnV1npbDDOfb mspah@zulily.com"
             ],
-            "access": [ "sysadmin" ]
+            "access": ["sysadmin"]
         }
 
 
     def test_import_databag(self):
+
+        # This isn't going to work, change set up to create tempory files and teardown to remove them
         account = CreateRoleAccount(user1)
 
     def test_failed_import_databag(self):
