@@ -11,16 +11,24 @@ class CreateRoleAccount:
     def import_users_sls(self):
         """
         convert the users_sls to a dictionary
+        :returns
         """
         with file(self.users) as f:
             self.users = yaml.load(f)
 
+        if not isinstance(self.users, dict):
+            self.users = None
+
     def import_ssh_sls(self):
         """
         convert the ssh_auth.sls to a dictionary
+        :returns
         """
         with file(self.ssh) as f:
             self.ssh = yaml.load(f)
+
+        if not isinstance(self.ssh, dict):
+            self.ssh = None
 
     def convert_to_api(self):
         """
