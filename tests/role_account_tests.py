@@ -59,6 +59,10 @@ class TestCreateRoleAccount(unittest.TestCase):
 
         self.ssl_auth_filename = 'ssh_auth.sls'
         self.users_filename = 'users.sls'
+        self.bad_users_filename = 'bad_users.sls'
+        self.bad_ssl_auth_filename = 'bad_ssh_auth.sls'
+
+
 
         with file(self.users_filename, 'w') as f:
             f.write(self.users_sls_contents)
@@ -72,7 +76,6 @@ class TestCreateRoleAccount(unittest.TestCase):
     def test_import_users_sls(self):
         """
         Testing the import_users_sls() function
-        :return: dictionary
         """
         user = 'r-infraops-git'
         role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user)
@@ -84,7 +87,6 @@ class TestCreateRoleAccount(unittest.TestCase):
     def test_failed_users_sls(self):
         """
         Testing a failed import_users_sls() function
-        :return:
         """
         pass
 
@@ -92,7 +94,6 @@ class TestCreateRoleAccount(unittest.TestCase):
     def test_import_ssh_sls(self):
         """
         Testing the import_ssh_sls function
-        :returns account.check_type returns True if databag is a role account
         """
         user = 'r-infraops-git'
         role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user)
