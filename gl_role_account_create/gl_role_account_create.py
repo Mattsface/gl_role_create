@@ -2,12 +2,13 @@ import yaml
 
 
 class CreateRoleAccount:
-    def __init__(self, users, ssh, account_name, account_email=None, gitlab_key=None):
+    def __init__(self, users, ssh, account_name, account_password, account_email=None, gitlab_key=None):
         self.users = users
         self.ssh = ssh
         self.account_name = account_name
         self.gitlab_key = gitlab_key
         self.account_email = account_email
+        self.account_password = account_password
         self.new_user = {}
 
 
@@ -43,9 +44,24 @@ class CreateRoleAccount:
         self.import_ssh_sls()
         self.import_users_sls()
 
+        if self.ssh is not None and self.users is not None:
+            try:
+                if self.users['accountz_passwd'][self.account_name]['uid'] > 9999 or self.users['accountz_passwd'][self.account_name]['uid'] < 5000:
+                    raise AttributeError
 
-        if self.ssh is not None or self.users is not None:
-            pass
+                if self.users['accountz_passwd'][self.account_name]:
+                    self.new_user['username'] = self.account_name
+                    self.new_user['name'] = self.account_name
+                    self.new_user['password'] = self.account_password
+
+                if self.account_email is not None:
+                    self.new_user['email'] = self.account_email
+                else:
+                    self.new_user['email'] = self.account_name + '@zulily.com'
+            except KeyError:
+                raise KeyError("Unable to find Username in accountz")
+            except AttributeError:
+                raise AttributeError("UID is not in the correct role account range")
         else:
             raise StandardError('Username or ssh key not found for user: {}'.format(self.account_name))
 
@@ -66,8 +82,6 @@ class CreateRoleAccount:
         """
         pass
         ## TODO: Make sure the account was created
-
-
 
 
 

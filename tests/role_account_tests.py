@@ -132,7 +132,8 @@ class TestCreateRoleAccount(unittest.TestCase):
         Testing the import_users_sls() function
         """
         user = 'r-infraops-git'
-        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user)
+        password = 'blahblah'
+        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, password)
         expected = dict
         role_user.import_users_sls()
         print role_user.users
@@ -144,7 +145,8 @@ class TestCreateRoleAccount(unittest.TestCase):
         Testing a failed import_users_sls() function
         """
         user = 'r-infraops-git'
-        role_user = CreateRoleAccount(self.bad_users_filename, self.bad_ssl_auth_filename, user)
+        password = 'blahblah'
+        role_user = CreateRoleAccount(self.bad_users_filename, self.bad_ssl_auth_filename, user, password)
         with self.assertRaises(yaml.scanner.ScannerError):
             role_user.import_users_sls()
 
@@ -153,7 +155,8 @@ class TestCreateRoleAccount(unittest.TestCase):
         Testing the import_ssh_sls function
         """
         user = 'r-infraops-git'
-        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user)
+        password = 'blahblah'
+        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, password)
         expected = dict
         role_user.import_ssh_sls()
         print role_user.ssh
@@ -162,39 +165,49 @@ class TestCreateRoleAccount(unittest.TestCase):
 
     def test_failed_import_ssh_sls(self):
         user = 'r-infraops-git'
-        role_user = CreateRoleAccount(self.bad_users_filename, self.bad_ssl_auth_filename, user)
+        password = 'blahblah'
+        role_user = CreateRoleAccount(self.bad_users_filename, self.bad_ssl_auth_filename, user, password)
         with self.assertRaises(yaml.scanner.ScannerError):
             role_user.import_ssh_sls()
-
 
     def test_convert_to_api_with_email(self):
         user = 'r-infraops-git'
         email = 'infraops@zulily.com'
+        password = 'blahblah'
         expected = {'username': 'r-infraops-git',
                     'email': 'infraops@zulily.com',
                     'name': 'r-iinfraops-git',
                     'password': 'blahblah',
                     'ssh-key': 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCJlrG43+2eJDNi3pkIph8PHCqJAoTRq1sRVZZ9tW0AXSXROOcxB1wLHFIx9iiBKNKqrxSRmFyKaWtvMjSqxL7e62Ll+QfjQGt8UyyiTVfWFx+aGy8YUil3OPej7UayOS3Izk6zwDUvRAjP41kIdZEP8oRTvRbUdo3j8sLIaSkF/yiYtqehSl2yZasQAOubLBbk4hq5sgLfmdyScb6J+zRn5SEwMHNufTbPQXArAeZa+zVA4y/zrCecPRIKfWCi6JadaZRS7DPa2Eyj1ShLVDqD7vIT4EyhAIkPFXam+MK641DyoNj9HSHv5FaAt6fSvQaH9PR/MCSSSdwgb6YT/Jx r-infraops-git@zulily.com'
                     }
-        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, email)
+        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, password, email)
+        role_user.convert_to_api()
+        actual = role_user.new_user
+        self.assertEqual(expected, actual, "Expected {}, but got {}".format(expected, actual))
 
     def test_convert_to_api_without_email(self):
         user = 'r-infraops-git'
+        password = 'blahblah'
         expected = {'username': 'r-infraops-git',
                     'email': 'r-infraops-git@zulily.com',
-                    'name': 'r-iinfraops-git',
+                    'name': 'r-infraops-git',
                     'password': 'blahblah',
                     'ssh-key': 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCJlrG43+2eJDNi3pkIph8PHCqJAoTRq1sRVZZ9tW0AXSXROOcxB1wLHFIx9iiBKNKqrxSRmFyKaWtvMjSqxL7e62Ll+QfjQGt8UyyiTVfWFx+aGy8YUil3OPej7UayOS3Izk6zwDUvRAjP41kIdZEP8oRTvRbUdo3j8sLIaSkF/yiYtqehSl2yZasQAOubLBbk4hq5sgLfmdyScb6J+zRn5SEwMHNufTbPQXArAeZa+zVA4y/zrCecPRIKfWCi6JadaZRS7DPa2Eyj1ShLVDqD7vIT4EyhAIkPFXam+MK641DyoNj9HSHv5FaAt6fSvQaH9PR/MCSSSdwgb6YT/Jx r-infraops-git@zulily.com'
                     }
-        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user)
-
+        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, password)
+        role_user.convert_to_api()
+        actual = role_user.new_user
+        self.assertEqual(expected, actual, "Expected {}, but got {}".format(expected, actual))
 
     def test_bad_convert_to_api_without_ssh_key(self):
 
         with self.assertRaises(StandardError):
+            pass
 
     def test_bad_convert_to_api_without_username(self):
+
         with self.assertRaises(StandardError):
+            pass
 
     def test_failed_dict_creation(self):
         pass
