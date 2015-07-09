@@ -135,6 +135,7 @@ class TestCreateRoleAccount(unittest.TestCase):
         role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user)
         expected = dict
         role_user.import_users_sls()
+        print role_user.users
         actual = type(role_user.users)
         self.assertEqual(expected, actual, "Expected type {}. but got {},".format(expected, actual))
 
@@ -155,6 +156,7 @@ class TestCreateRoleAccount(unittest.TestCase):
         role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user)
         expected = dict
         role_user.import_ssh_sls()
+        print role_user.ssh
         actual = type(role_user.ssh)
         self.assertEqual(expected, actual, "Expected type {}. but got {},".format(expected, actual))
 
@@ -174,7 +176,7 @@ class TestCreateRoleAccount(unittest.TestCase):
                     'password': 'blahblah',
                     'ssh-key': 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCJlrG43+2eJDNi3pkIph8PHCqJAoTRq1sRVZZ9tW0AXSXROOcxB1wLHFIx9iiBKNKqrxSRmFyKaWtvMjSqxL7e62Ll+QfjQGt8UyyiTVfWFx+aGy8YUil3OPej7UayOS3Izk6zwDUvRAjP41kIdZEP8oRTvRbUdo3j8sLIaSkF/yiYtqehSl2yZasQAOubLBbk4hq5sgLfmdyScb6J+zRn5SEwMHNufTbPQXArAeZa+zVA4y/zrCecPRIKfWCi6JadaZRS7DPa2Eyj1ShLVDqD7vIT4EyhAIkPFXam+MK641DyoNj9HSHv5FaAt6fSvQaH9PR/MCSSSdwgb6YT/Jx r-infraops-git@zulily.com'
                     }
-
+        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, email)
 
     def test_convert_to_api_without_email(self):
         user = 'r-infraops-git'
@@ -184,13 +186,15 @@ class TestCreateRoleAccount(unittest.TestCase):
                     'password': 'blahblah',
                     'ssh-key': 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCJlrG43+2eJDNi3pkIph8PHCqJAoTRq1sRVZZ9tW0AXSXROOcxB1wLHFIx9iiBKNKqrxSRmFyKaWtvMjSqxL7e62Ll+QfjQGt8UyyiTVfWFx+aGy8YUil3OPej7UayOS3Izk6zwDUvRAjP41kIdZEP8oRTvRbUdo3j8sLIaSkF/yiYtqehSl2yZasQAOubLBbk4hq5sgLfmdyScb6J+zRn5SEwMHNufTbPQXArAeZa+zVA4y/zrCecPRIKfWCi6JadaZRS7DPa2Eyj1ShLVDqD7vIT4EyhAIkPFXam+MK641DyoNj9HSHv5FaAt6fSvQaH9PR/MCSSSdwgb6YT/Jx r-infraops-git@zulily.com'
                     }
+        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user)
+
 
     def test_bad_convert_to_api_without_ssh_key(self):
-        pass
-        with self.assertRaises():
+
+        with self.assertRaises(StandardError):
 
     def test_bad_convert_to_api_without_username(self):
-        pass
+        with self.assertRaises(StandardError):
 
     def test_failed_dict_creation(self):
         pass
