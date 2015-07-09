@@ -2,17 +2,19 @@ import yaml
 
 
 class CreateRoleAccount:
-    def __init__(self, users, ssh, account_name, gitlab_key=None):
+    def __init__(self, users, ssh, account_name, account_email=None, gitlab_key=None):
         self.users = users
         self.ssh = ssh
         self.account_name = account_name
         self.gitlab_key = gitlab_key
+        self.account_email = account_email
 
     def import_users_sls(self):
         """
         convert the users_sls to a dictionary
         :returns
         """
+
         with file(self.users) as f:
             self.users = yaml.load(f)
 
@@ -24,6 +26,7 @@ class CreateRoleAccount:
         convert the ssh_auth.sls to a dictionary
         :returns
         """
+
         with file(self.ssh) as f:
             self.ssh = yaml.load(f)
 
@@ -33,6 +36,7 @@ class CreateRoleAccount:
     def convert_to_api(self):
         """
         Use self.ssh and self.users to create an object to send to the Gitlab API
+
         """
         pass
 
