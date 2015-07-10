@@ -50,10 +50,9 @@ class CreateRoleAccount:
                 if uid > 9999 or uid < 5000:
                     raise AttributeError
 
-                if self.users['accountz_passwd'][self.account_name]:
-                    self.new_user['username'] = self.account_name
-                    self.new_user['name'] = self.account_name
-                    self.new_user['password'] = self.account_password
+                self.new_user['username'] = self.account_name
+                self.new_user['name'] = self.account_name
+                self.new_user['password'] = self.account_password
 
                 if self.account_email is not None:
                     self.new_user['email'] = self.account_email
