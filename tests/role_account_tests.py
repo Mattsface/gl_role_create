@@ -176,7 +176,7 @@ class TestCreateRoleAccount(unittest.TestCase):
         password = 'blahblah'
         expected = {'username': 'r-infraops-git',
                     'email': 'infraops@zulily.com',
-                    'name': 'r-iinfraops-git',
+                    'name': 'r-infraops-git',
                     'password': 'blahblah',
                     'ssh-key': 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCJlrG43+2eJDNi3pkIph8PHCqJAoTRq1sRVZZ9tW0AXSXROOcxB1wLHFIx9iiBKNKqrxSRmFyKaWtvMjSqxL7e62Ll+QfjQGt8UyyiTVfWFx+aGy8YUil3OPej7UayOS3Izk6zwDUvRAjP41kIdZEP8oRTvRbUdo3j8sLIaSkF/yiYtqehSl2yZasQAOubLBbk4hq5sgLfmdyScb6J+zRn5SEwMHNufTbPQXArAeZa+zVA4y/zrCecPRIKfWCi6JadaZRS7DPa2Eyj1ShLVDqD7vIT4EyhAIkPFXam+MK641DyoNj9HSHv5FaAt6fSvQaH9PR/MCSSSdwgb6YT/Jx r-infraops-git@zulily.com'
                     }

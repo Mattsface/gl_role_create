@@ -39,14 +39,15 @@ class CreateRoleAccount:
     def convert_to_api(self):
         """
         Use self.ssh and self.users to create an object to send to the Gitlab API
-
         """
         self.import_ssh_sls()
         self.import_users_sls()
 
         if self.ssh is not None and self.users is not None:
             try:
-                if self.users['accountz_passwd'][self.account_name]['uid'] > 9999 or self.users['accountz_passwd'][self.account_name]['uid'] < 5000:
+                uid = self.users['accountz_passwd'][self.account_name]['uid']
+
+                if uid > 9999 or uid < 5000:
                     raise AttributeError
 
                 if self.users['accountz_passwd'][self.account_name]:
@@ -58,6 +59,10 @@ class CreateRoleAccount:
                     self.new_user['email'] = self.account_email
                 else:
                     self.new_user['email'] = self.account_name + '@zulily.com'
+
+                if self.ssh['accountz_ssh_auth'][self.account_name]:
+                    self.new_user['ssh-key'] = self.ssh['accountz_ssh_auth'][self.account_name][0]
+
             except KeyError:
                 raise KeyError("Unable to find Username in accountz")
             except AttributeError:
