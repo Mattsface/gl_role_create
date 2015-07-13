@@ -136,7 +136,6 @@ class TestCreateRoleAccount(unittest.TestCase):
         role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, password)
         expected = dict
         role_user.import_users_sls()
-        print role_user.users
         actual = type(role_user.users)
         self.assertEqual(expected, actual, "Expected type {}. but got {},".format(expected, actual))
 
@@ -159,7 +158,6 @@ class TestCreateRoleAccount(unittest.TestCase):
         role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, password)
         expected = dict
         role_user.import_ssh_sls()
-        print role_user.ssh
         actual = type(role_user.ssh)
         self.assertEqual(expected, actual, "Expected type {}. but got {},".format(expected, actual))
 
@@ -202,15 +200,20 @@ class TestCreateRoleAccount(unittest.TestCase):
     def test_bad_convert_to_api_without_ssh_key(self):
 
         with self.assertRaises(StandardError):
-            pass
+            user = 'fishface'
+            password = 'blahblah'
+            role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, password)
+            role_user.convert_to_api()
 
     def test_bad_convert_to_api_without_username(self):
 
         with self.assertRaises(StandardError):
-            pass
+            user = 'c-rrobeal'
+            password = 'blahblah'
+            role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, password)
+            role_user.convert_to_api()
 
-    def test_failed_dict_creation(self):
-        pass
+
 
 
 
