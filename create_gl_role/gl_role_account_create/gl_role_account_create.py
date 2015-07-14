@@ -78,17 +78,13 @@ class CreateRoleAccount:
             new_role_user = gl.User({'username': self.new_user['username'], 'name': self.new_user['name'],
                                      'password': self.new_user['password'], 'email': self.new_user['email'],
                                      'project_limit': '0', 'is_admin': False, 'can_create_group': False})
+            new_role_user.save()
 
             new_ssh_key = new_role_user.Key({'title': 'ssh key', 'key': self.new_user['ssh-key']})
-
-            new_role_user.save()
             new_ssh_key.save()
 
-            gl.close()
             return new_role_user.id
-
         except:
-            gl.close()
             raise StandardError("Unable to create Gitlab User")
 
     def connect_to_gitlab_api(self):
