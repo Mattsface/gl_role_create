@@ -13,14 +13,12 @@ class CreateRoleAccount:
         self.account_password = account_password
         self.new_user = {}
 
-
     def import_users_sls(self):
         """
         convert the users_sls to a dictionary
-        :returns
         """
 
-        with file(self.users) as f:
+        with open(self.users) as f:
             self.users = yaml.load(f)
 
         if not isinstance(self.users, dict):
@@ -29,10 +27,10 @@ class CreateRoleAccount:
     def import_ssh_sls(self):
         """
         convert the ssh_auth.sls to a dictionary
-        :returns
         """
 
-        with file(self.ssh) as f:
+        with open(self.ssh) as f:
+            print f
             self.ssh = yaml.load(f)
 
         if not isinstance(self.ssh, dict):
@@ -87,9 +85,11 @@ class CreateRoleAccount:
             new_role_user.save()
             new_ssh_key.save()
 
+            gl.close()
             return new_role_user.id
 
         except:
+            gl.close()
             raise StandardError("Unable to create Gitlab User")
 
     def connect_to_gitlab_api(self):
@@ -113,8 +113,11 @@ class CreateRoleAccount:
                 return True
             else:
                 return False
+
+            gl.close()
         except:
-            raise StandardError("Unable to located create Gitlab Role User")
+            gl.close()
+            raise StandardError("Unable to locate create Gitlab Role User")
 
 
 
