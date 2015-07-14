@@ -18,7 +18,7 @@ class CreateRoleAccount:
         convert the users_sls to a dictionary
         """
 
-        with open(self.users) as f:
+        with file(self.users, 'r') as f:
             self.users = yaml.load(f)
 
         if not isinstance(self.users, dict):
@@ -29,8 +29,7 @@ class CreateRoleAccount:
         convert the ssh_auth.sls to a dictionary
         """
 
-        with open(self.ssh) as f:
-            print f
+        with file(self.ssh, 'r') as f:
             self.ssh = yaml.load(f)
 
         if not isinstance(self.ssh, dict):
