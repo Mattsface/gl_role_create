@@ -17,7 +17,7 @@ url = https://gitlab.corp.zulily.com
 ## Examples
 
 create_role.py -h
-usage: create_role.py [-h] [-a ACCOUNT_NAME] [-p PASSWORD] [-e ACCOUNT_EMAIL]
+usage: create_role.py [-h] -a ACCOUNT_NAME -p PASSWORD [-e ACCOUNT_EMAIL]
 
 optional arguments:
   -h, --help        show this help message and exit
