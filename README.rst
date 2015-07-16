@@ -5,7 +5,7 @@ Create a Role account a Gitlab Server
 Create a directory in your users home directory named .create_role and place a config.ini file in it
 
 The config.ini file needs to look something like this
-
+```
 [repo]
 pillar_periodic = /home/mspah/git/pillar_periodic
 
@@ -13,9 +13,9 @@ pillar_periodic = /home/mspah/git/pillar_periodic
 token = slsdfk039402340
 url = https://gitlab.corp.zulily.com
 
-
+```
 ## Examples
-
+```
 create_role.py -h
 usage: create_role.py [-h] -a ACCOUNT_NAME -p PASSWORD [-e ACCOUNT_EMAIL]
 
@@ -30,3 +30,4 @@ To create a role account for r-infraopts-git:
 
 To Create a role account for r-infraops-git that uses an email:
     $  create_role.py -a r-infraops-git -p pD3fv3425f -e infraops@zulily.com
+```
