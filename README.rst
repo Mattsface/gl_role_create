@@ -24,3 +24,9 @@ optional arguments:
   -a ACCOUNT_NAME   Name of the role account you want to create
   -p PASSWORD       Password for role account
   -e ACCOUNT_EMAIL  Role account email, defaults to account_name@zulily.com
+
+To create a role account for r-infraopts-git:
+    $  create_role.py -a r-infraops-git -p pD3fv3425f
+
+To Create a role account for r-infraops-git that uses an email:
+    $  create_role.py -a r-infraops-git -p pD3fv3425f -e infraops@zulily.com
