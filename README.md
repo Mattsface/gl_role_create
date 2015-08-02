@@ -1,4 +1,4 @@
-Create a Role account a Gitlab Server
+Create a Role account on a Gitlab Server using Salt user and SSH sls files
 
 
 ## Setup
@@ -15,14 +15,17 @@ url = https://gitlab.corp.zulily.com
 ```
 ## Examples
 ```
-create_role.py -h
-usage: create_role.py [-h] -a ACCOUNT_NAME -p PASSWORD [-e ACCOUNT_EMAIL]
+usage: create_role.py [-h] (-r RANDOM_PASSWORD_LENGTH | -p PASSWORD) -a
+                      ACCOUNT_NAME [-e ACCOUNT_EMAIL]
 
 optional arguments:
-  -h, --help        show this help message and exit
-  -a ACCOUNT_NAME   Name of the role account you want to create
-  -p PASSWORD       Password for role account
-  -e ACCOUNT_EMAIL  Role account email, defaults to account_name@zulily.com
+  -h, --help            show this help message and exit
+  -r RANDOM_PASSWORD_LENGTH
+                        Length of random password to be created
+  -p PASSWORD           Password for role account
+  -a ACCOUNT_NAME       Name of the role account you want to create
+  -e ACCOUNT_EMAIL      Role account email, defaults to
+                        account_name@zulily.com
 
 To create a role account for r-infraopts-git:
     $ create_role.py -a r-infraops-git -p pD3fv3425f
