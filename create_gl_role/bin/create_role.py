@@ -27,8 +27,9 @@ def main():
 
     if args.password:
         password = args.password
-    elif args.random_password_length:
+    else:
         password = generate_random_password(args.random_password_length)
+
 
     assert os.path.isdir(pillar_periodic)
 

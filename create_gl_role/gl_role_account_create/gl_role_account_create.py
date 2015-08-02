@@ -111,7 +111,6 @@ class CreateRoleAccount(object):
             gl.close()
             return ret
         except:
-            gl.close()
             raise StandardError("Unable to locate create Gitlab Role User")
 
 
