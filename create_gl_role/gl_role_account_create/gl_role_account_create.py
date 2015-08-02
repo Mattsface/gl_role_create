@@ -2,15 +2,15 @@ import yaml
 from gitlab import *
 
 
-class CreateRoleAccount:
-    def __init__(self, users, ssh, account_name, account_password, account_email=None, gitlab_key=None, gitlab_url=None):
-        self.users = users
-        self.ssh = ssh
-        self.account_name = account_name
-        self.gitlab_key = gitlab_key
-        self.gitlab_url = gitlab_url
-        self.account_email = account_email
-        self.account_password = account_password
+class CreateRoleAccount(object):
+    def __init__(self, users_sls, ssh_sls, **options):
+        self.users = users_sls
+        self.ssh = ssh_sls
+        self.account_name = options.get('account_name')
+        self.gitlab_key = options.get('gitlab_key')
+        self.gitlab_url = options.get('gitlab_url')
+        self.account_email = options.get('account_email')
+        self.account_password = options.get('account_password')
         self.new_user = {}
 
     def import_users_sls(self):
@@ -105,11 +105,11 @@ class CreateRoleAccount:
             user = gl.User(user_id)
 
             if user is not None:
-                return True
+                ret = True
             else:
-                return False
-
+                ret = False
             gl.close()
+            return ret
         except:
             gl.close()
             raise StandardError("Unable to locate create Gitlab Role User")
