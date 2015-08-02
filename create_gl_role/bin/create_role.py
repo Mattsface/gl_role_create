@@ -53,9 +53,12 @@ def parse_arguments():
     collect command line arguments
     """
     parser = argparse.ArgumentParser()
+    password_group = parser.add_mutually_exclusive_group()
+    password_group.add_argument('-r', action='store', dest='random_password_length', required=True, help="Length of random password to be created")
+    password_group.add_argument('-p', action='store', dest='password', required=True, help="Password for role account")
     parser.add_argument('-a', action='store', dest='account_name', required=True, help="Name of the role account you want to create")
-    parser.add_argument('-p', action='store', dest='password', required=True, help="Password for role account")
     parser.add_argument('-e', action='store', dest='account_email', help="Role account email, defaults to account_name@zulily.com")
+
     args = parser.parse_args()
     return args
 
