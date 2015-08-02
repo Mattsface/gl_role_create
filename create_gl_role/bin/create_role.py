@@ -7,6 +7,7 @@ import os
 import git
 import random
 import sys
+import string
 from gitlab import *
 
 
@@ -83,11 +84,16 @@ def import_config():
         print "Unable to open config file, place it in ~/.create_role/config.ini"
         sys.exit(1)
 
+
 def generate_random_password(length):
     """
     Create a random password based on length and return it
     """
-    pass
+    characters = string.ascii_letters + string.digits + "!@#$%^&*"
+    random.seed = (os.urandom(1024))
+    password = ''.join(random.choice(characters) for i in xrange(length))
+
+    return password
 
 if __name__ == "__main__":
     main()
