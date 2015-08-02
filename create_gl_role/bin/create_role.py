@@ -52,6 +52,10 @@ def main():
     role_user_id = gl_connection.send_to_gitlab()
     if gl_connection.verify_create(role_user_id):
         print "{} Role user successfully created".format(role_account_name)
+        try:
+            print "The random password is {}".format(args.random_password_length)
+        except:
+            pass
     else:
         print "{} Role user not created".format(role_account_name)
 
