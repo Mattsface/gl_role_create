@@ -5,6 +5,7 @@ import argparse
 import getpass
 import os
 import git
+import random
 import sys
 from gitlab import *
 
@@ -17,11 +18,16 @@ def main():
     gitlab_token = config.get('gitlab', 'token')
     gitlab_url = config.get('gitlab', 'url')
     role_account_name = args.account_name
-    password = args.password
+
     if args.account_email:
         email = args.account_email
     else:
         email = None
+
+    if args.password:
+        password = args.password
+    elif args.random_password_length:
+        password = generate_random_password(args.random_password_length)
 
     assert os.path.isdir(pillar_periodic)
 
@@ -77,6 +83,11 @@ def import_config():
         print "Unable to open config file, place it in ~/.create_role/config.ini"
         sys.exit(1)
 
+def generate_random_password(length):
+    """
+    Create a random password based on length and return it
+    """
+    pass
 
 if __name__ == "__main__":
     main()
