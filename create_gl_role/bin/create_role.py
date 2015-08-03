@@ -57,7 +57,7 @@ def main():
     if gl_connection.verify_create(role_user_id):
         print "{} Role user successfully created".format(role_account_name)
         try:
-            print "The random password is {}".format(args.random_password_length)
+            print "The random password is {}".format(password)
         except:
             pass
     else:
