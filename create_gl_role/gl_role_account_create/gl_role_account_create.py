@@ -2,15 +2,15 @@ import yaml
 from gitlab import *
 
 
-class CreateRoleAccount:
-    def __init__(self, users, ssh, account_name, account_password, account_email=None, gitlab_key=None, gitlab_url=None):
-        self.users = users
-        self.ssh = ssh
-        self.account_name = account_name
-        self.gitlab_key = gitlab_key
-        self.gitlab_url = gitlab_url
-        self.account_email = account_email
-        self.account_password = account_password
+class CreateRoleAccount(object):
+    def __init__(self, users_sls, ssh_sls, **options):
+        self.users = users_sls
+        self.ssh = ssh_sls
+        self.account_name = options.get('account_name')
+        self.gitlab_key = options.get('gitlab_key')
+        self.gitlab_url = options.get('gitlab_url')
+        self.account_email = options.get('account_email')
+        self.account_password = options.get('account_password')
         self.new_user = {}
 
     def import_users_sls(self):
@@ -72,6 +72,7 @@ class CreateRoleAccount:
         """
         Send user data to gitlab role account create
         """
+
         try:
             gl = self.connect_to_gitlab_api()
 
@@ -79,13 +80,13 @@ class CreateRoleAccount:
                                      'password': self.new_user['password'], 'email': self.new_user['email'],
                                      'project_limit': '0', 'is_admin': False, 'can_create_group': False})
             new_role_user.save()
-
+            print self.new_user['ssh-key']
             new_ssh_key = new_role_user.Key({'title': 'ssh key', 'key': self.new_user['ssh-key']})
             new_ssh_key.save()
 
             return new_role_user.id
-        except:
-            raise StandardError("Unable to create Gitlab User")
+        except Exception as e:
+            raise StandardError("Unable to create Gitlab User because {}".format(e))
 
     def connect_to_gitlab_api(self):
         try:
@@ -93,8 +94,8 @@ class CreateRoleAccount:
             gl.auth()
 
             return gl
-        except:
-            raise StandardError("Unable to connect to Gitlab API")
+        except Exception as e:
+            raise StandardError("Unable to connect to Gitlab API because {}".format(e))
 
     def verify_create(self, user_id):
         """
@@ -105,14 +106,13 @@ class CreateRoleAccount:
             user = gl.User(user_id)
 
             if user is not None:
-                return True
+                ret = True
             else:
-                return False
+                ret = False
 
-            gl.close()
-        except:
-            gl.close()
-            raise StandardError("Unable to locate create Gitlab Role User")
+            return ret
+        except Exception as e:
+            raise StandardError("Unable to locate created Gitlab Role User".format(e))
 
 
 

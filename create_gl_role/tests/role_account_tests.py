@@ -135,7 +135,8 @@ class TestCreateRoleAccount(unittest.TestCase):
         """
         user = 'r-infraops-git'
         password = 'blahblah'
-        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, password)
+        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, account_name=user,
+                                      account_password=password)
         expected = dict
         role_user.import_users_sls()
         actual = type(role_user.users)
@@ -147,7 +148,8 @@ class TestCreateRoleAccount(unittest.TestCase):
         """
         user = 'r-infraops-git'
         password = 'blahblah'
-        role_user = CreateRoleAccount(self.bad_users_filename, self.bad_ssl_auth_filename, user, password)
+        role_user = CreateRoleAccount(self.bad_users_filename, self.bad_ssl_auth_filename, account_name=user,
+                                      account_password=password)
         with self.assertRaises(yaml.scanner.ScannerError):
             role_user.import_users_sls()
 
@@ -157,7 +159,8 @@ class TestCreateRoleAccount(unittest.TestCase):
         """
         user = 'r-infraops-git'
         password = 'blahblah'
-        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, password)
+        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, account_name=user,
+                                      account_password=password)
         expected = dict
         role_user.import_ssh_sls()
         actual = type(role_user.ssh)
@@ -166,7 +169,8 @@ class TestCreateRoleAccount(unittest.TestCase):
     def test_failed_import_ssh_sls(self):
         user = 'r-infraops-git'
         password = 'blahblah'
-        role_user = CreateRoleAccount(self.bad_users_filename, self.bad_ssl_auth_filename, user, password)
+        role_user = CreateRoleAccount(self.bad_users_filename, self.bad_ssl_auth_filename, account_name=user,
+                                      account_password=password)
         with self.assertRaises(yaml.scanner.ScannerError):
             role_user.import_ssh_sls()
 
@@ -180,7 +184,8 @@ class TestCreateRoleAccount(unittest.TestCase):
                     'password': 'blahblah',
                     'ssh-key': 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCJlrG43+2eJDNi3pkIph8PHCqJAoTRq1sRVZZ9tW0AXSXROOcxB1wLHFIx9iiBKNKqrxSRmFyKaWtvMjSqxL7e62Ll+QfjQGt8UyyiTVfWFx+aGy8YUil3OPej7UayOS3Izk6zwDUvRAjP41kIdZEP8oRTvRbUdo3j8sLIaSkF/yiYtqehSl2yZasQAOubLBbk4hq5sgLfmdyScb6J+zRn5SEwMHNufTbPQXArAeZa+zVA4y/zrCecPRIKfWCi6JadaZRS7DPa2Eyj1ShLVDqD7vIT4EyhAIkPFXam+MK641DyoNj9HSHv5FaAt6fSvQaH9PR/MCSSSdwgb6YT/Jx r-infraops-git@zulily.com'
                     }
-        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, password, email)
+        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, account_name=user,
+                                      account_password=password, account_email=email)
         role_user.convert_to_api()
         actual = role_user.new_user
         self.assertEqual(expected, actual, "Expected {}, but got {}".format(expected, actual))
@@ -194,7 +199,8 @@ class TestCreateRoleAccount(unittest.TestCase):
                     'password': 'blahblah',
                     'ssh-key': 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCJlrG43+2eJDNi3pkIph8PHCqJAoTRq1sRVZZ9tW0AXSXROOcxB1wLHFIx9iiBKNKqrxSRmFyKaWtvMjSqxL7e62Ll+QfjQGt8UyyiTVfWFx+aGy8YUil3OPej7UayOS3Izk6zwDUvRAjP41kIdZEP8oRTvRbUdo3j8sLIaSkF/yiYtqehSl2yZasQAOubLBbk4hq5sgLfmdyScb6J+zRn5SEwMHNufTbPQXArAeZa+zVA4y/zrCecPRIKfWCi6JadaZRS7DPa2Eyj1ShLVDqD7vIT4EyhAIkPFXam+MK641DyoNj9HSHv5FaAt6fSvQaH9PR/MCSSSdwgb6YT/Jx r-infraops-git@zulily.com'
                     }
-        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, password)
+        role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, account_name=user,
+                                      account_password=password)
         role_user.convert_to_api()
         actual = role_user.new_user
         self.assertEqual(expected, actual, "Expected {}, but got {}".format(expected, actual))
@@ -204,7 +210,8 @@ class TestCreateRoleAccount(unittest.TestCase):
         with self.assertRaises(StandardError):
             user = 'fishface'
             password = 'blahblah'
-            role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, password)
+            role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, account_name=user,
+                                          account_password=password)
             role_user.convert_to_api()
 
     def test_bad_convert_to_api_without_username(self):
@@ -212,7 +219,8 @@ class TestCreateRoleAccount(unittest.TestCase):
         with self.assertRaises(StandardError):
             user = 'c-rrobeal'
             password = 'blahblah'
-            role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, user, password)
+            role_user = CreateRoleAccount(self.users_filename, self.ssl_auth_filename, account_name=user,
+                                          account_password=password)
             role_user.convert_to_api()
 
 
