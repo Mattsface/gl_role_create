@@ -72,8 +72,7 @@ class CreateRoleAccount(object):
         """
         Send user data to gitlab role account create
         """
-        # TODO: implement a more informative exception return
-        # gitlab.GitlabCreateError
+
         try:
             gl = self.connect_to_gitlab_api()
 
@@ -86,8 +85,8 @@ class CreateRoleAccount(object):
             new_ssh_key.save()
 
             return new_role_user.id
-        except:
-            raise StandardError("Unable to create Gitlab User")
+        except Exception as e:
+            raise StandardError("Unable to create Gitlab User because {}".format(e))
 
     def connect_to_gitlab_api(self):
         try:
@@ -95,14 +94,13 @@ class CreateRoleAccount(object):
             gl.auth()
 
             return gl
-        except:
-            raise StandardError("Unable to connect to Gitlab API")
+        except Exception as e:
+            raise StandardError("Unable to connect to Gitlab API because {}".format(e))
 
     def verify_create(self, user_id):
         """
         lets make sure the new role user exists on the system
         """
-        # TODO: Add better exception handling
         try:
             gl = self.connect_to_gitlab_api()
             user = gl.User(user_id)
@@ -113,8 +111,8 @@ class CreateRoleAccount(object):
                 ret = False
 
             return ret
-        except:
-            raise StandardError("Unable to locate create Gitlab Role User")
+        except Exception as e:
+            raise StandardError("Unable to locate created Gitlab Role User".format(e))
 
 
 

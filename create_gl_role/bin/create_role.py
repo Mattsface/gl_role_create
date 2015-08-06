@@ -54,6 +54,7 @@ def main():
 
     gl_connection.convert_to_api()
     role_user_id = gl_connection.send_to_gitlab()
+
     if gl_connection.verify_create(role_user_id):
         print "{} Role user successfully created".format(role_account_name)
         try:
