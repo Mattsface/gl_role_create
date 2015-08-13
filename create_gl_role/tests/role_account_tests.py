@@ -113,7 +113,6 @@ class TestCreateRoleAccount(unittest.TestCase):
         self.bad_users_filename = 'bad_users.sls'
         self.bad_ssl_auth_filename = 'bad_ssh_auth.sls'
 
-
         with file(self.users_filename, 'w') as f:
             f.write(self.users_sls_contents)
         with file(self.ssl_auth_filename, 'w') as f:
@@ -122,6 +121,10 @@ class TestCreateRoleAccount(unittest.TestCase):
             f.write(self.bad_users_sls_contents)
         with file(self.bad_ssl_auth_filename, 'w') as f:
             f.write(self.bad_ssl_auth_contents)
+
+        testname = self.id().split(".")[2]
+
+        print "Running {}".format(testname)
 
     def tearDown(self):
         remove(self.ssl_auth_filename)
